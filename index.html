@@ -10,10 +10,148 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Montserrat', sans-serif;
-            background: #ffffff;
+            background: #f5f5f5;
             color: #000000;
             overflow-x: hidden;
             line-height: 1.6;
+        }
+
+        /* Envelope Container */
+        .envelope-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .envelope-wrapper.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .envelope {
+            position: relative;
+            width: min(400px, 90vw);
+            height: min(280px, 60vw);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+        }
+
+        .envelope.opening .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(135deg, #252525 0%, #1a1a1a 100%);
+            clip-path: polygon(0 100%, 50% 0, 100% 100%);
+            z-index: 2;
+        }
+
+        .envelope-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #c9a961 0%, #b8941f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Great Vibes', cursive;
+            font-size: 32px;
+            color: #1a1a1a;
+            z-index: 4;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover .envelope-seal {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .envelope-text {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #333;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #666;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        /* Main Content - Hidden Initially */
+        .main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease 0.5s;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Hero Section */
@@ -275,181 +413,222 @@
 </head>
 <body>
 
-    <!-- Hero -->
-    <section class="hero" id="home">
-        <!-- Монограмма: Красивые заглавные буквы Great Vibes -->
-        <div class="calligraphy-monogram">А&nbsp;&nbsp;А</div>
-        
-        <div class="names">Александр и Анастасия</div>
-        <div class="hero-line"></div>
-        <div class="wedding-date-hero">12 Декабря 2026 • Новосибирск</div>
-        <div class="scroll-indicator" onclick="document.getElementById('photo1').scrollIntoView({behavior: 'smooth'})">Листайте вниз</div>
-    </section>
-
-    <!-- Photo 1 -->
-    <div class="photo-divider" id="photo1">
-        <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80');"></div>
-        <div class="photo-overlay"></div>
-        <div class="photo-content">
-            <div class="photo-quote">Начало нашей<br>вечности</div>
+    <!-- Envelope Overlay -->
+    <div class="envelope-wrapper" id="envelope-wrapper">
+        <div class="envelope" id="envelope">
+            <div class="envelope-body"></div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-pocket"></div>
+            <div class="envelope-seal">А</div>
+            <div class="envelope-text">Вам пришло приглашение</div>
+            <div class="click-hint">Нажмите, чтобы открыть</div>
         </div>
     </div>
 
-    <!-- Quote -->
-    <section class="section section-white">
-        <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 4vw, 28px); font-style: italic; max-width: 650px; margin: 0 auto;">
-            Любовь — это когда счастье другого важнее твоего собственного
-        </p>
-        <div style="font-family: 'Parisienne', cursive; font-size: 18px; margin-top: 15px; opacity: 0.7;">— Франсуаза Саган</div>
-    </section>
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
 
-    <!-- Details -->
-    <section class="section section-white" id="details">
-        <h2 class="section-title">Детали</h2>
-        <div class="section-subtitle">Details</div>
-        <div class="divider"></div>
-        <div class="info-grid">
-            <div class="info-item">
-                <div class="info-icon">📅</div>
-                <div class="info-label">Дата</div>
-                <div class="info-value">12 Декабря 2026<br>Суббота</div>
-            </div>
-            <div class="info-item">
-                <div class="info-icon">🕐</div>
-                <div class="info-label">Время</div>
-                <div class="info-value">Сбор гостей в 17:30<br>Начало в 18:00</div>
-            </div>
-            <div class="info-item">
-                <div class="info-icon">📍</div>
-                <div class="info-label">Место</div>
-                <div class="info-value">Новосибирск<br>Улица Планетная, 53/3</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Photo 2 -->
-    <div class="photo-divider small" id="photo2">
-        <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1600&q=80');"></div>
-        <div class="photo-overlay"></div>
-        <div class="photo-content">
-            <div class="photo-quote">Вместе</div>
-        </div>
-    </div>
-
-    <!-- Dress Code (Strictly Black) -->
-    <section class="section dress-code" id="dresscode">
-        <h2 class="section-title">Дресс-код</h2>
-        <div class="section-subtitle">Black Tie</div>
-        <div class="divider"></div>
-        <p class="dress-code-text">
-            Мы будем рады, если вы поддержите строгую цветовую гамму нашей свадьбы.<br>
-            Единственный допустимый цвет наряда:
-        </p>
-        <div class="single-color-box">ЧЁРНЫЙ</div>
-    </section>
-
-    <!-- Photo 3 -->
-    <div class="photo-divider" id="photo3">
-        <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&q=80');"></div>
-        <div class="photo-overlay"></div>
-        <div class="photo-content">
-            <div class="photo-quote">Любовь — это навсегда</div>
-        </div>
-    </div>
-
-    <!-- Timer -->
-    <section class="section section-gray" id="timer">
-        <h2 class="section-title">До свадьбы</h2>
-        <div class="divider"></div>
-        <div class="timer">
-            <div class="timer-item"><span class="timer-number" id="days">00</span><div class="timer-label">Дней</div></div>
-            <div class="timer-item"><span class="timer-number" id="hours">00</span><div class="timer-label">Часов</div></div>
-            <div class="timer-item"><span class="timer-number" id="minutes">00</span><div class="timer-label">Минут</div></div>
-            <div class="timer-item"><span class="timer-number" id="seconds">00</span><div class="timer-label">Секунд</div></div>
-        </div>
-    </section>
-
-    <!-- RSVP Form Section (Formspree) -->
-    <section class="section section-white" id="rsvp">
-        <h2 class="section-title">Подтвердите участие</h2>
-        <div class="divider"></div>
-        
-        <p class="rsvp-text">
-            Будем искренне рады разделить с вами этот особенный день
-        </p>
-        <span class="rsvp-deadline">Пожалуйста, подтвердите до 15 ноября 2026</span>
-        
-        <!-- Formspree Form -->
-        <div class="rsvp-form-container">
-            <form action="https://formspree.io/f/meevjbzz" method="POST" id="rsvp-form">
-                
-                <!-- Hidden field for subject -->
-                <input type="hidden" name="_subject" value="RSVP: Свадьба Александр & Анастасия">
-                
-                <!-- Name -->
-                <div class="form-group">
-                    <label class="form-label" for="name">Ваше имя *</label>
-                    <input class="form-input" type="text" id="name" name="name" required placeholder="Иван Иванов">
-                </div>
-                
-                <!-- Email or Phone -->
-                <div class="form-group">
-                    <label class="form-label" for="contact">Email или телефон *</label>
-                    <input class="form-input" type="text" id="contact" name="contact" required placeholder="example@mail.ru или +7 999 000-00-00">
-                </div>
-                
-                <!-- Will you attend? -->
-                <div class="form-group">
-                    <label class="form-label">Вы сможете присутствовать? *</label>
-                    <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="attendance" value="yes" required>
-                            <span>Да, с радостью!</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="attendance" value="no">
-                            <span>К сожалению, нет</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Number of guests -->
-                <div class="form-group">
-                    <label class="form-label" for="guests">Количество гостей</label>
-                    <select class="form-select" id="guests" name="guests">
-                        <option value="1">Только я (1)</option>
-                        <option value="2">Я + 1 гость (2)</option>
-                        <option value="3">Я + 2 гостя (3)</option>
-                        <option value="family">Семья (укажите в комментарии)</option>
-                    </select>
-                </div>
-                
-                <!-- Comments -->
-                <div class="form-group">
-                    <label class="form-label" for="message">Пожелания или вопросы</label>
-                    <textarea class="form-textarea" id="message" name="message" placeholder="Напишите, если у вас есть предпочтения по меню или вопросы..."></textarea>
-                </div>
-                
-                <!-- Submit Button -->
-                <button type="submit" class="submit-btn" id="submit-btn">Отправить подтверждение</button>
-            </form>
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="calligraphy-monogram">А&nbsp;&nbsp;А</div>
             
-            <!-- Success Message (hidden by default) -->
-            <div class="form-success" id="form-success">
-                <div class="form-success-title">Спасибо! 💍</div>
-                <div class="form-success-text">Ваш ответ принят. Мы свяжемся с вами для подтверждения деталей.</div>
+            <div class="names">Александр и Анастасия</div>
+            <div class="hero-line"></div>
+            <div class="wedding-date-hero">12 Декабря 2026 • Новосибирск</div>
+            <div class="scroll-indicator" onclick="document.getElementById('photo1').scrollIntoView({behavior: 'smooth'})">Листайте вниз</div>
+        </section>
+
+        <!-- Photo 1 -->
+        <div class="photo-divider" id="photo1">
+            <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80');"></div>
+            <div class="photo-overlay"></div>
+            <div class="photo-content">
+                <div class="photo-quote">Начало нашей<br>вечности</div>
             </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-monogram">А А</div>
-        <div class="footer-date">12.12.2026 • Новосибирск</div>
-    </footer>
+        <!-- Quote -->
+        <section class="section section-white">
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 4vw, 28px); font-style: italic; max-width: 650px; margin: 0 auto;">
+                Любовь — это когда счастье другого важнее твоего собственного
+            </p>
+            <div style="font-family: 'Parisienne', cursive; font-size: 18px; margin-top: 15px; opacity: 0.7;">— Франсуаза Саган</div>
+        </section>
+
+        <!-- Details -->
+        <section class="section section-white" id="details">
+            <h2 class="section-title">Детали</h2>
+            <div class="section-subtitle">Details</div>
+            <div class="divider"></div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">📅</div>
+                    <div class="info-label">Дата</div>
+                    <div class="info-value">12 Декабря 2026<br>Суббота</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-label">Время</div>
+                    <div class="info-value">Сбор гостей в 17:30<br>Начало в 18:00</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-label">Место</div>
+                    <div class="info-value">Новосибирск<br>Улица Планетная, 53/3</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo 2 -->
+        <div class="photo-divider small" id="photo2">
+            <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1600&q=80');"></div>
+            <div class="photo-overlay"></div>
+            <div class="photo-content">
+                <div class="photo-quote">Вместе</div>
+            </div>
+        </div>
+
+        <!-- Dress Code (Strictly Black) -->
+        <section class="section dress-code" id="dresscode">
+            <h2 class="section-title">Дресс-код</h2>
+            <div class="section-subtitle">Black Tie</div>
+            <div class="divider"></div>
+            <p class="dress-code-text">
+                Мы будем рады, если вы поддержите строгую цветовую гамму нашей свадьбы.<br>
+                Единственный допустимый цвет наряда:
+            </p>
+            <div class="single-color-box">ЧЁРНЫЙ</div>
+        </section>
+
+        <!-- Photo 3 -->
+        <div class="photo-divider" id="photo3">
+            <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&q=80');"></div>
+            <div class="photo-overlay"></div>
+            <div class="photo-content">
+                <div class="photo-quote">Любовь — это навсегда</div>
+            </div>
+        </div>
+
+        <!-- Timer -->
+        <section class="section section-gray" id="timer">
+            <h2 class="section-title">До свадьбы</h2>
+            <div class="divider"></div>
+            <div class="timer">
+                <div class="timer-item"><span class="timer-number" id="days">00</span><div class="timer-label">Дней</div></div>
+                <div class="timer-item"><span class="timer-number" id="hours">00</span><div class="timer-label">Часов</div></div>
+                <div class="timer-item"><span class="timer-number" id="minutes">00</span><div class="timer-label">Минут</div></div>
+                <div class="timer-item"><span class="timer-number" id="seconds">00</span><div class="timer-label">Секунд</div></div>
+            </div>
+        </section>
+
+        <!-- RSVP Form Section (Formspree) -->
+        <section class="section section-white" id="rsvp">
+            <h2 class="section-title">Подтвердите участие</h2>
+            <div class="divider"></div>
+            
+            <p class="rsvp-text">
+                Будем искренне рады разделить с вами этот особенный день
+            </p>
+            <span class="rsvp-deadline">Пожалуйста, подтвердите до 15 ноября 2026</span>
+            
+            <!-- Formspree Form -->
+            <div class="rsvp-form-container">
+                <form action="https://formspree.io/f/meevjbzz" method="POST" id="rsvp-form">
+                    
+                    <!-- Hidden field for subject -->
+                    <input type="hidden" name="_subject" value="RSVP: Свадьба Александр & Анастасия">
+                    
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label class="form-label" for="name">Ваше имя *</label>
+                        <input class="form-input" type="text" id="name" name="name" required placeholder="Иван Иванов">
+                    </div>
+                    
+                    <!-- Email or Phone -->
+                    <div class="form-group">
+                        <label class="form-label" for="contact">Email или телефон *</label>
+                        <input class="form-input" type="text" id="contact" name="contact" required placeholder="example@mail.ru или +7 999 000-00-00">
+                    </div>
+                    
+                    <!-- Will you attend? -->
+                    <div class="form-group">
+                        <label class="form-label">Вы сможете присутствовать? *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="attendance" value="yes" required>
+                                <span>Да, с радостью!</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="attendance" value="no">
+                                <span>К сожалению, нет</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Number of guests -->
+                    <div class="form-group">
+                        <label class="form-label" for="guests">Количество гостей</label>
+                        <select class="form-select" id="guests" name="guests">
+                            <option value="1">Только я (1)</option>
+                            <option value="2">Я + 1 гость (2)</option>
+                            <option value="3">Я + 2 гостя (3)</option>
+                            <option value="family">Семья (укажите в комментарии)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Comments -->
+                    <div class="form-group">
+                        <label class="form-label" for="message">Пожелания или вопросы</label>
+                        <textarea class="form-textarea" id="message" name="message" placeholder="Напишите, если у вас есть предпочтения по меню или вопросы..."></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn" id="submit-btn">Отправить подтверждение</button>
+                </form>
+                
+                <!-- Success Message (hidden by default) -->
+                <div class="form-success" id="form-success">
+                    <div class="form-success-title">Спасибо! 💍</div>
+                    <div class="form-success-text">Ваш ответ принят. Мы свяжемся с вами для подтверждения деталей.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-monogram">А А</div>
+            <div class="footer-date">12.12.2026 • Новосибирск</div>
+        </footer>
+
+    </div>
 
     <script>
-        // Таймер обратного отсчета до 12.12.2026 18:00
+        // Envelope Opening Animation
+        const envelope = document.getElementById('envelope');
+        const envelopeWrapper = document.getElementById('envelope-wrapper');
+        const mainContent = document.getElementById('main-content');
+
+        envelope.addEventListener('click', function() {
+            // Add opening class for flap animation
+            envelope.classList.add('opening');
+            
+            // After flap opens, fade out envelope and show content
+            setTimeout(() => {
+                envelopeWrapper.classList.add('opened');
+                mainContent.classList.add('visible');
+                
+                // Enable scrolling
+                document.body.style.overflow = 'auto';
+                
+                // Scroll to top smoothly
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 800);
+        });
+
+        // Prevent scrolling when envelope is shown
+        document.body.style.overflow = 'hidden';
+
+        // Timer
         function updateTimer() {
             const weddingDate = new Date('December 12, 2026 18:00:00').getTime();
             const now = new Date().getTime();
@@ -467,7 +646,7 @@
         }
         setInterval(updateTimer, 1000); updateTimer();
 
-        // Анимация при прокрутке
+        // Scroll Animation Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.15 });
