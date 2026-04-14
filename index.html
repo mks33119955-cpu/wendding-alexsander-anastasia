@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Александр & Анастасия | Свадебное приглашение</title>
-    <!-- Шрифты: Pinyon Script (для 18 века), Cormorant Garamond, Parisienne, Great Vibes -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400&family=Parisienne&family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -75,18 +74,17 @@
             z-index: 2;
         }
 
-        /* Идеальное центрирование печати */
         .envelope-seal {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Жесткое центрирование */
+            transform: translate(-50%, -50%);
             width: 75px; height: 75px;
             background: linear-gradient(135deg, #c9a961 0%, #b8941f 100%);
             border-radius: 50%;
             display: flex;
             justify-content: center;
-            align-items: center; /* Выравнивание по центру по вертикали */
+            align-items: center;
             z-index: 4;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: transform 0.3s ease;
@@ -94,7 +92,6 @@
 
         .envelope:hover .envelope-seal { transform: translate(-50%, -50%) scale(1.1); }
 
-        /* Буква на печати */
         .envelope-seal-letter {
             font-family: 'Pinyon Script', cursive;
             font-size: 52px;
@@ -136,18 +133,17 @@
             padding: 40px 20px;
         }
 
-        /* МОНОГРАММА: Ровная линия, красивая завитушка */
         .calligraphy-monogram {
-            font-family: 'Pinyon Script', cursive; /* Тот самый шрифт 18 века */
+            font-family: 'Pinyon Script', cursive;
             font-size: clamp(90px, 25vw, 160px);
             font-weight: 400;
             color: #000;
-            line-height: 1.2; /* Чтобы буквы не прыгали */
+            line-height: 1.2;
             margin-bottom: 30px;
             opacity: 0;
             animation: elegantFadeIn 2.5s ease-in forwards;
-            white-space: nowrap; /* Чтобы не переносилось */
-            letter-spacing: 4px; /* Немного воздуха между буквами */
+            white-space: nowrap;
+            letter-spacing: 4px;
         }
 
         .names {
@@ -264,6 +260,15 @@
         .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .radio-option input { width: 18px; height: 18px; cursor: pointer; accent-color: #000; }
         
+        .form-note {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
         .submit-btn { width: 100%; padding: 18px 40px; background: #000; color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; margin-top: 10px; }
         .submit-btn:hover { background: #fff; color: #000; border: 1px solid #000; transform: translateY(-2px); }
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
@@ -303,7 +308,6 @@
             <div class="envelope-flap"></div>
             <div class="envelope-pocket"></div>
             <div class="envelope-seal">
-                <!-- Идеально отцентрованная А -->
                 <span class="envelope-seal-letter">A</span>
             </div>
             <div class="envelope-text">Вам пришло приглашение</div>
@@ -316,9 +320,7 @@
 
         <!-- Hero -->
         <section class="hero" id="home">
-            <!-- Инициалы A & A: Шрифт Pinyon Script -->
             <div class="calligraphy-monogram">A & A</div>
-            
             <div class="names">Александр и Анастасия</div>
             <div class="hero-line"></div>
             <div class="wedding-date-hero">12 Декабря 2026 • Новосибирск</div>
@@ -423,14 +425,17 @@
             <div class="rsvp-form-container">
                 <form action="https://formspree.io/f/meevjbzz" method="POST" id="rsvp-form">
                     <input type="hidden" name="_subject" value="RSVP: Свадьба Александр & Анастасия">
+                    
                     <div class="form-group">
                         <label class="form-label" for="name">Ваше имя *</label>
                         <input class="form-input" type="text" id="name" name="name" required placeholder="Иван Иванов">
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label" for="contact">Email или телефон *</label>
                         <input class="form-input" type="text" id="contact" name="contact" required placeholder="example@mail.ru или +7 999 000-00-00">
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label">Вы сможете присутствовать? *</label>
                         <div class="radio-group">
@@ -438,6 +443,7 @@
                             <label class="radio-option"><input type="radio" name="attendance" value="no"><span>К сожалению, нет</span></label>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label" for="guests">Количество гостей</label>
                         <select class="form-select" id="guests" name="guests">
@@ -447,12 +453,25 @@
                             <option value="family">Семья (укажите в комментарии)</option>
                         </select>
                     </div>
+
+                    <!-- НОВЫЙ БЛОК: Предпочтения по меню -->
+                    <div class="form-group">
+                        <label class="form-label">Предпочтения по меню *</label>
+                        <div class="radio-group">
+                            <label class="radio-option"><input type="radio" name="food_preference" value="meat" required><span>Мясо</span></label>
+                            <label class="radio-option"><input type="radio" name="food_preference" value="fish"><span>Рыба</span></label>
+                        </div>
+                        <p class="form-note">Если вас более двух человек, пожалуйста, укажите предпочтения каждого в комментарии ниже.</p>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label" for="message">Пожелания или вопросы</label>
                         <textarea class="form-textarea" id="message" name="message" placeholder="Напишите, если у вас есть предпочтения по меню или вопросы..."></textarea>
                     </div>
+                    
                     <button type="submit" class="submit-btn" id="submit-btn">Отправить подтверждение</button>
                 </form>
+                
                 <div class="form-success" id="form-success">
                     <div class="form-success-title">Спасибо! 💍</div>
                     <div class="form-success-text">Ваш ответ принят. Мы свяжемся с вами для подтверждения деталей.</div>
