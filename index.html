@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Александр & Анастасия | Свадебное приглашение</title>
+    
+    <!-- Open Graph для красивых превью в WhatsApp/Telegram -->
+    <meta property="og:title" content="Приглашение на свадьбу | Александр & Анастасия">
+    <meta property="og:description" content="12 декабря 2026 • Новосибирск. Ждем вас!">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#000000">
+    
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@300;400&family=Parisienne&family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,99 +26,52 @@
 
         /* --- ENVELOPE STYLES --- */
         .envelope-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.8s ease, visibility 0.8s;
         }
-
-        .envelope-wrapper.opened {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
+        .envelope-wrapper.opened { opacity: 0; visibility: hidden; pointer-events: none; }
         .envelope {
-            position: relative;
-            width: min(400px, 90vw);
-            height: min(280px, 60vw);
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            position: relative; width: min(400px, 90vw); height: min(280px, 60vw);
+            cursor: pointer; transition: transform 0.3s ease;
         }
-
         .envelope:hover { transform: translateY(-5px); }
-
         .envelope-body {
             position: absolute; bottom: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
-            border-radius: 4px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
-
         .envelope-flap {
             position: absolute; top: 0; left: 0; width: 100%; height: 50%;
             background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
             clip-path: polygon(0 0, 50% 100%, 100% 0);
-            transform-origin: top;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 3;
         }
-
-        .envelope.opening .envelope-flap {
-            transform: rotateX(180deg); z-index: 1;
-        }
-
+        .envelope.opening .envelope-flap { transform: rotateX(180deg); z-index: 1; }
         .envelope-pocket {
             position: absolute; bottom: 0; width: 100%; height: 60%;
             background: linear-gradient(135deg, #252525 0%, #1a1a1a 100%);
-            clip-path: polygon(0 100%, 50% 0, 100% 100%);
-            z-index: 2;
+            clip-path: polygon(0 100%, 50% 0, 100% 100%); z-index: 2;
         }
-
         .envelope-seal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 75px; height: 75px;
             background: linear-gradient(135deg, #c9a961 0%, #b8941f 100%);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 4;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            z-index: 4; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.3s ease;
         }
-
         .envelope:hover .envelope-seal { transform: translate(-50%, -50%) scale(1.1); }
-
         .envelope-seal-letter {
-            font-family: 'Pinyon Script', cursive;
-            font-size: 52px;
-            color: #1a1a1a;
-            line-height: 1;
-            margin: 0;
-            padding: 0;
+            font-family: 'Pinyon Script', cursive; font-size: 52px; color: #1a1a1a; line-height: 1; margin: 0; padding: 0;
         }
-
         .envelope-text {
             position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%);
-            text-align: center; color: #333;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 18px; letter-spacing: 3px; text-transform: uppercase;
-            animation: pulse 2s infinite;
+            text-align: center; color: #333; font-family: 'Cormorant Garamond', serif;
+            font-size: 18px; letter-spacing: 3px; text-transform: uppercase; animation: pulse 2s infinite;
         }
-
         @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
-
         .click-hint {
             position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%);
             font-size: 12px; letter-spacing: 2px; color: #666; text-transform: uppercase; opacity: 0.7;
@@ -120,73 +81,41 @@
         .main-content { opacity: 0; visibility: hidden; transition: opacity 1s ease 0.5s; }
         .main-content.visible { opacity: 1; visibility: visible; }
 
-        /* Hero Section */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: #ffffff;
-            position: relative;
-            padding: 40px 20px;
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: #ffffff; position: relative; padding: 40px 20px;
         }
-
         .calligraphy-monogram {
-            font-family: 'Pinyon Script', cursive;
-            font-size: clamp(90px, 25vw, 160px);
-            font-weight: 400;
-            color: #000;
-            line-height: 1.2;
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: elegantFadeIn 2.5s ease-in forwards;
-            white-space: nowrap;
-            letter-spacing: 4px;
+            font-family: 'Pinyon Script', cursive; font-size: clamp(90px, 25vw, 160px);
+            font-weight: 400; color: #000; line-height: 1.2; margin-bottom: 30px;
+            opacity: 0; animation: elegantFadeIn 2.5s ease-in forwards;
+            white-space: nowrap; letter-spacing: 4px;
         }
-
         .names {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(18px, 3.5vw, 26px);
-            font-weight: 300;
-            letter-spacing: 10px;
-            margin: 10px 0;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: elegantFadeIn 2.5s ease-in 0.5s forwards;
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 3.5vw, 26px);
+            font-weight: 300; letter-spacing: 10px; margin: 10px 0; text-transform: uppercase;
+            opacity: 0; animation: elegantFadeIn 2.5s ease-in 0.5s forwards;
         }
-
         .hero-line {
-            width: 1px; height: 50px;
-            background: linear-gradient(to bottom, transparent, #000, transparent);
-            margin: 15px auto; opacity: 0.4;
-            animation: elegantFadeIn 2.5s ease-in 0.8s forwards;
+            width: 1px; height: 50px; background: linear-gradient(to bottom, transparent, #000, transparent);
+            margin: 15px auto; opacity: 0.4; animation: elegantFadeIn 2.5s ease-in 0.8s forwards;
         }
-
         .wedding-date-hero {
-            font-family: 'Parisienne', cursive;
-            font-size: clamp(17px, 3vw, 22px);
-            opacity: 0;
-            animation: elegantFadeIn 2.5s ease-in 1.1s forwards;
-            letter-spacing: 2px;
+            font-family: 'Parisienne', cursive; font-size: clamp(17px, 3vw, 22px);
+            opacity: 0; animation: elegantFadeIn 2.5s ease-in 1.1s forwards; letter-spacing: 2px;
         }
-
         .scroll-indicator {
-            position: absolute; bottom: 30px;
-            animation: bounce 2s infinite;
-            cursor: pointer; font-size: 11px;
-            opacity: 0.5; letter-spacing: 3px;
-            text-transform: uppercase;
+            position: absolute; bottom: 30px; animation: bounce 2s infinite;
+            cursor: pointer; font-size: 11px; opacity: 0.5; letter-spacing: 3px; text-transform: uppercase;
         }
-
         @keyframes elegantFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
 
         /* Photos */
         .photo-divider {
-            height: 60vh; min-height: 400px;
-            position: relative; display: flex; align-items: center; justify-content: center;
+            height: 60vh; min-height: 400px; position: relative;
+            display: flex; align-items: center; justify-content: center;
             overflow: hidden; background-color: #111;
         }
         .photo-bg {
@@ -203,8 +132,8 @@
         }
         .photo-divider.visible .photo-content { opacity: 1; transform: translateY(0); }
         .photo-quote {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(36px, 7vw, 60px); text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            font-family: 'Great Vibes', cursive; font-size: clamp(36px, 7vw, 60px);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
         .photo-divider.small { height: 35vh; min-height: 250px; }
 
@@ -215,7 +144,6 @@
         .section-title { font-family: 'Great Vibes', cursive; font-size: clamp(40px, 8vw, 60px); margin-bottom: 10px; }
         .section-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 6px; color: #666; margin-bottom: 40px; text-transform: uppercase; }
         .divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, #000, transparent); margin: 0 auto 40px; opacity: 0.4; }
-
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; max-width: 900px; margin: 0 auto; }
         .info-item { opacity: 0; transform: translateY(20px); transition: all 0.8s ease; padding: 20px; }
         .info-item.visible { opacity: 1; transform: translateY(0); }
@@ -229,10 +157,8 @@
         .dress-code .section-subtitle { color: #aaa; }
         .dress-code .divider { background: linear-gradient(to bottom, transparent, #fff, transparent); }
         .dress-code-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; margin-bottom: 40px; }
-        
         .dress-note { font-family: 'Parisienne', cursive; font-size: clamp(18px, 3.5vw, 22px); margin-top: 30px; opacity: 0.9; font-style: italic; }
         .sunglasses-icon { font-size: 40px; margin: 20px 0; display: block; }
-        
         .single-color-box {
             width: 120px; height: 120px; background: #000; border: 2px solid #fff;
             display: flex; align-items: center; justify-content: center;
@@ -255,24 +181,13 @@
         .form-input, .form-select, .form-textarea { width: 100%; padding: 14px 16px; border: 1px solid #000; background: #fff; color: #000; font-family: 'Montserrat', sans-serif; font-size: 14px; transition: all 0.3s ease; }
         .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: #000; box-shadow: 0 0 0 3px rgba(0,0,0,0.1); }
         .form-textarea { min-height: 100px; resize: vertical; }
-        
         .radio-group { display: flex; gap: 30px; align-items: center; }
         .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .radio-option input { width: 18px; height: 18px; cursor: pointer; accent-color: #000; }
-        
-        .form-note {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 14px;
-            color: #666;
-            margin-top: 8px;
-            font-style: italic;
-            line-height: 1.4;
-        }
-
+        .form-note { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: #666; margin-top: 8px; font-style: italic; line-height: 1.4; }
         .submit-btn { width: 100%; padding: 18px 40px; background: #000; color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; margin-top: 10px; }
         .submit-btn:hover { background: #fff; color: #000; border: 1px solid #000; transform: translateY(-2px); }
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        
         .form-success { display: none; text-align: center; padding: 30px 20px; background: #f9f9f9; border: 1px solid #000; margin-top: 20px; }
         .form-success.show { display: block; animation: fadeIn 0.5s ease; }
         .form-success-title { font-family: 'Great Vibes', cursive; font-size: 32px; margin-bottom: 10px; }
@@ -281,25 +196,53 @@
 
         /* Footer */
         .footer { padding: 60px 20px; background: #000; color: #fff; text-align: center; }
-        .footer-monogram { 
-            font-family: 'Pinyon Script', cursive; 
-            font-size: 58px; 
-            opacity: 0.8; 
-            margin-bottom: 10px; 
-            letter-spacing: 3px; 
-            line-height: 1.2;
-        }
+        .footer-monogram { font-family: 'Pinyon Script', cursive; font-size: 58px; opacity: 0.8; margin-bottom: 10px; letter-spacing: 3px; line-height: 1.2; }
         .footer-date { font-family: 'Parisienne', cursive; font-size: 18px; opacity: 0.7; }
+
+        /* Music Toggle */
+        .music-toggle {
+            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+            width: 50px; height: 50px; background: #000; border: none; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease;
+            opacity: 0; visibility: hidden;
+        }
+        .music-toggle.visible { opacity: 1; visibility: visible; }
+        .music-toggle:hover { transform: scale(1.1); }
+        .music-toggle svg { width: 24px; height: 24px; fill: #fff; }
+        .music-toggle.muted svg { opacity: 0.5; }
+
+        /* Petals Container */
+        #petals-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9998; overflow: hidden;
+        }
+        .petal {
+            position: absolute; top: -20px;
+            background: radial-gradient(circle, #fff 0%, #e0e0e0 100%);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
 
         @media (max-width: 768px) {
             .timer { gap: 15px; }
             .radio-group { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .rsvp-buttons { flex-direction: column; align-items: center; }
-            .rsvp-button { width: 80%; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Audio -->
+    <audio id="wedding-music" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Petals Animation Container -->
+    <div id="petals-container"></div>
 
     <!-- Envelope Overlay -->
     <div class="envelope-wrapper" id="envelope-wrapper">
@@ -315,10 +258,14 @@
         </div>
     </div>
 
+    <!-- Music Toggle -->
+    <button class="music-toggle" id="music-toggle" title="Включить/выключить музыку">
+        <svg id="icon-play" viewBox="0 0 24 24" style="display:none;"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
     <!-- Main Content -->
     <div class="main-content" id="main-content">
-
-        <!-- Hero -->
         <section class="hero" id="home">
             <div class="calligraphy-monogram">A & A</div>
             <div class="names">Александр и Анастасия</div>
@@ -327,16 +274,13 @@
             <div class="scroll-indicator" onclick="document.getElementById('photo1').scrollIntoView({behavior: 'smooth'})">Листайте вниз</div>
         </section>
 
-        <!-- Photo 1 -->
+        <!-- Photo 1 - ИСПРАВЛЕННАЯ ССЫЛКА -->
         <div class="photo-divider" id="photo1">
             <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80');"></div>
             <div class="photo-overlay"></div>
-            <div class="photo-content">
-                <div class="photo-quote">Начало нашей<br>вечности</div>
-            </div>
+            <div class="photo-content"><div class="photo-quote">Начало нашей<br>вечности</div></div>
         </div>
 
-        <!-- Quote -->
         <section class="section section-white">
             <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 4vw, 28px); font-style: italic; max-width: 650px; margin: 0 auto;">
                 Любовь — это когда счастье другого важнее твоего собственного
@@ -344,66 +288,41 @@
             <div style="font-family: 'Parisienne', cursive; font-size: 18px; margin-top: 15px; opacity: 0.7;">— Франсуаза Саган</div>
         </section>
 
-        <!-- Details -->
         <section class="section section-white" id="details">
             <h2 class="section-title">Детали</h2>
             <div class="section-subtitle">Details</div>
             <div class="divider"></div>
             <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-icon">📅</div>
-                    <div class="info-label">Дата</div>
-                    <div class="info-value">12 Декабря 2026<br>Суббота</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">🕐</div>
-                    <div class="info-label">Время</div>
-                    <div class="info-value">Сбор гостей в 17:30<br>Начало в 18:00</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">📍</div>
-                    <div class="info-label">Место</div>
-                    <div class="info-value">Новосибирск<br>Улица Планетная, 53/3</div>
-                </div>
+                <div class="info-item"><div class="info-icon">📅</div><div class="info-label">Дата</div><div class="info-value">12 Декабря 2026<br>Суббота</div></div>
+                <div class="info-item"><div class="info-icon">🕐</div><div class="info-label">Время</div><div class="info-value">Сбор гостей в 17:30<br>Начало в 18:00</div></div>
+                <div class="info-item"><div class="info-icon">📍</div><div class="info-label">Место</div><div class="info-value">Новосибирск<br>Улица Планетная, 53/3</div></div>
             </div>
         </section>
 
-        <!-- Photo 2 -->
+        <!-- Photo 2 - ИСПРАВЛЕННАЯ ССЫЛКА -->
         <div class="photo-divider small" id="photo2">
             <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1600&q=80');"></div>
             <div class="photo-overlay"></div>
-            <div class="photo-content">
-                <div class="photo-quote">Вместе</div>
-            </div>
+            <div class="photo-content"><div class="photo-quote">Вместе</div></div>
         </div>
 
-        <!-- Dress Code -->
         <section class="section dress-code" id="dresscode">
             <h2 class="section-title">Дресс-код</h2>
             <div class="section-subtitle">Black Tie</div>
             <div class="divider"></div>
-            <p class="dress-code-text">
-                Мы будем рады, если вы поддержите строгую цветовую гамму нашей свадьбы.<br>
-                Единственный допустимый цвет наряда:
-            </p>
+            <p class="dress-code-text">Мы будем рады, если вы поддержите строгую цветовую гамму нашей свадьбы.<br>Единственный допустимый цвет наряда:</p>
             <div class="single-color-box">ЧЁРНЫЙ</div>
-            
             <span class="sunglasses-icon">🕶️</span>
-            <p class="dress-note">
-                И не забудьте взять с собой солнцезащитные очки!
-            </p>
+            <p class="dress-note">И не забудьте взять с собой солнцезащитные очки!</p>
         </section>
 
-        <!-- Photo 3 -->
+        <!-- Photo 3 - ИСПРАВЛЕННАЯ ССЫЛКА -->
         <div class="photo-divider" id="photo3">
             <div class="photo-bg" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&q=80');"></div>
             <div class="photo-overlay"></div>
-            <div class="photo-content">
-                <div class="photo-quote">Любовь — это навсегда</div>
-            </div>
+            <div class="photo-content"><div class="photo-quote">Любовь — это навсегда</div></div>
         </div>
 
-        <!-- Timer -->
         <section class="section section-gray" id="timer">
             <h2 class="section-title">До свадьбы</h2>
             <div class="divider"></div>
@@ -415,7 +334,6 @@
             </div>
         </section>
 
-        <!-- RSVP Form -->
         <section class="section section-white" id="rsvp">
             <h2 class="section-title">Подтвердите участие</h2>
             <div class="divider"></div>
@@ -425,17 +343,8 @@
             <div class="rsvp-form-container">
                 <form action="https://formspree.io/f/meevjbzz" method="POST" id="rsvp-form">
                     <input type="hidden" name="_subject" value="RSVP: Свадьба Александр & Анастасия">
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="name">Ваше имя *</label>
-                        <input class="form-input" type="text" id="name" name="name" required placeholder="Иван Иванов">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="contact">Email или телефон *</label>
-                        <input class="form-input" type="text" id="contact" name="contact" required placeholder="example@mail.ru или +7 999 000-00-00">
-                    </div>
-                    
+                    <div class="form-group"><label class="form-label" for="name">Ваше имя *</label><input class="form-input" type="text" id="name" name="name" required placeholder="Иван Иванов"></div>
+                    <div class="form-group"><label class="form-label" for="contact">Email или телефон *</label><input class="form-input" type="text" id="contact" name="contact" required placeholder="example@mail.ru или +7 999 000-00-00"></div>
                     <div class="form-group">
                         <label class="form-label">Вы сможете присутствовать? *</label>
                         <div class="radio-group">
@@ -443,18 +352,12 @@
                             <label class="radio-option"><input type="radio" name="attendance" value="no"><span>К сожалению, нет</span></label>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="guests">Количество гостей</label>
+                    <div class="form-group"><label class="form-label" for="guests">Количество гостей</label>
                         <select class="form-select" id="guests" name="guests">
-                            <option value="1">Только я (1)</option>
-                            <option value="2">Я + 1 гость (2)</option>
-                            <option value="3">Я + 2 гостя (3)</option>
-                            <option value="family">Семья (укажите в комментарии)</option>
+                            <option value="1">Только я (1)</option><option value="2">Я + 1 гость (2)</option>
+                            <option value="3">Я + 2 гостя (3)</option><option value="family">Семья (укажите в комментарии)</option>
                         </select>
                     </div>
-
-                    <!-- НОВЫЙ БЛОК: Предпочтения по меню -->
                     <div class="form-group">
                         <label class="form-label">Предпочтения по меню *</label>
                         <div class="radio-group">
@@ -463,32 +366,63 @@
                         </div>
                         <p class="form-note">Если вас более двух человек, пожалуйста, укажите предпочтения каждого в комментарии ниже.</p>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="message">Пожелания или вопросы</label>
-                        <textarea class="form-textarea" id="message" name="message" placeholder="Напишите, если у вас есть предпочтения по меню или вопросы..."></textarea>
-                    </div>
-                    
+                    <div class="form-group"><label class="form-label" for="message">Пожелания или вопросы</label><textarea class="form-textarea" id="message" name="message" placeholder="Напишите, если у вас есть предпочтения по меню или вопросы..."></textarea></div>
                     <button type="submit" class="submit-btn" id="submit-btn">Отправить подтверждение</button>
                 </form>
-                
-                <div class="form-success" id="form-success">
-                    <div class="form-success-title">Спасибо! 💍</div>
-                    <div class="form-success-text">Ваш ответ принят. Мы свяжемся с вами для подтверждения деталей.</div>
-                </div>
+                <div class="form-success" id="form-success"><div class="form-success-title">Спасибо! 💍</div><div class="form-success-text">Ваш ответ принят. Мы свяжемся с вами для подтверждения деталей.</div></div>
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer-monogram">A & A</div>
             <div class="footer-date">12.12.2026 • Новосибирск</div>
         </footer>
-
     </div>
 
     <script>
-        // Envelope Animation
+        // Music & Petals Logic
+        const music = document.getElementById('wedding-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const iconPlay = document.getElementById('icon-play');
+        const iconPause = document.getElementById('icon-pause');
+        const petalsContainer = document.getElementById('petals-container');
+
+        function fadeInMusic() {
+            music.volume = 0;
+            music.play().catch(() => {});
+            let vol = 0;
+            const fade = setInterval(() => {
+                if (vol < 0.4) { vol += 0.02; music.volume = vol; } else clearInterval(fade);
+            }, 100);
+        }
+
+        function spawnPetals() {
+            petalsContainer.innerHTML = '';
+            const colors = ['#ffffff', '#f0f0f0', '#c9a961', '#e0e0e0'];
+            for (let i = 0; i < 40; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.width = (Math.random() * 10 + 6) + 'px';
+                petal.style.height = (Math.random() * 10 + 6) + 'px';
+                petal.style.background = colors[Math.floor(Math.random() * colors.length)];
+                petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                petal.style.animationDelay = (Math.random() * 2) + 's';
+                petal.style.opacity = Math.random() * 0.6 + 0.4;
+                petalsContainer.appendChild(petal);
+            }
+            setTimeout(() => { petalsContainer.innerHTML = ''; }, 8000);
+        }
+
+        musicToggle.addEventListener('click', () => {
+            if (music.paused) {
+                music.play(); iconPlay.style.display = 'none'; iconPause.style.display = 'block'; musicToggle.classList.remove('muted');
+            } else {
+                music.pause(); iconPlay.style.display = 'block'; iconPause.style.display = 'none'; musicToggle.classList.add('muted');
+            }
+        });
+
+        // Envelope Open
         const envelope = document.getElementById('envelope');
         const envelopeWrapper = document.getElementById('envelope-wrapper');
         const mainContent = document.getElementById('main-content');
@@ -496,13 +430,17 @@
         envelope.addEventListener('click', function() {
             envelope.classList.add('opening');
             setTimeout(() => {
+                fadeInMusic();
+                spawnPetals(); // Запуск лепестков
+            }, 400);
+            setTimeout(() => {
                 envelopeWrapper.classList.add('opened');
                 mainContent.classList.add('visible');
+                musicToggle.classList.add('visible');
                 document.body.style.overflow = 'auto';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 800);
         });
-
         document.body.style.overflow = 'hidden';
 
         // Timer
@@ -518,39 +456,25 @@
         }
         setInterval(updateTimer, 1000); updateTimer();
 
-        // Scroll Observer
+        // Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.15 });
         document.querySelectorAll('.info-item, .timer-item, .photo-divider').forEach(el => observer.observe(el));
 
-        // Formspree Form
+        // Form
         const form = document.getElementById('rsvp-form');
         const submitBtn = document.getElementById('submit-btn');
         const successMsg = document.getElementById('form-success');
-
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true; submitBtn.textContent = 'Отправка...';
             const data = new FormData(form);
             try {
                 const response = await fetch(form.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } });
-                if (response.ok) {
-                    form.style.display = 'none';
-                    successMsg.classList.add('show');
-                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    const errorData = await response.json();
-                    alert('Ошибка: ' + (errorData.errors ? Object.values(errorData.errors).join(', ') : 'Попробуйте ещё раз'));
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Отправить подтверждение';
-                }
-            } catch (error) {
-                alert('Произошла ошибка при отправке. Пожалуйста, попробуйте ещё раз или напишите нам напрямую.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить подтверждение';
-            }
+                if (response.ok) { form.style.display = 'none'; successMsg.classList.add('show'); successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                else { const err = await response.json(); alert('Ошибка: ' + (err.errors ? Object.values(err.errors).join(', ') : 'Попробуйте ещё раз')); submitBtn.disabled = false; submitBtn.textContent = 'Отправить подтверждение'; }
+            } catch (error) { alert('Ошибка сети. Проверьте интернет и попробуйте снова.'); submitBtn.disabled = false; submitBtn.textContent = 'Отправить подтверждение'; }
         });
     </script>
 </body>
